@@ -57,6 +57,7 @@
     <v-btn
       color="success"
       class="mx-auto"
+      type="submit"
     >
       Registrarse
     </v-btn>

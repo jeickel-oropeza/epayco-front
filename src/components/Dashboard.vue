@@ -40,6 +40,7 @@
   Vue.use(VueAxios, axios);
 
   const token = window.localStorage.getItem('token');
+  const userId = window.localStorage.getItem('userId');
 
   export default {
     name: 'Home',
@@ -61,16 +62,13 @@
     },
     methods: {
       getData() {
-        let userId = window.localStorage.getItem('userId');
-
         this.axios.get(`user/show/${userId}`)
           .then(response => {
             this.name = response.data.data.name.toUpperCase();
             this.lastName = response.data.data.lastname.toUpperCase();
-            this.amount = response.data.data.wallet.amount;
           })
-          .catch(err => (err));
-      }
+          .catch(err => {this.$router.push('/login').catch(error => (error)); console.log(err)});
+      },
     }
   }
 </script>

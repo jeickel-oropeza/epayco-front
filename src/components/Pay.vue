@@ -27,20 +27,7 @@
                 class="d-flex flex-column"
                 @submit="addBalance"
               >
-                <v-text-field
-                  v-model="dni"
-                  :rules="validateRules"
-                  label="DNI"
-                  required
-                ></v-text-field>
-                
-                <v-text-field
-                  v-model="phone"
-                  :rules="validateRules"
-                  label="Teléfono"
-                  required
-                ></v-text-field>
-                
+
                 <v-text-field
                   v-model="amount"
                   :rules="validateRules"
@@ -49,19 +36,26 @@
                   required
                 ></v-text-field>
 
+                <v-text-field
+                  v-model="description"
+                  :rules="validateRules"
+                  label="Descripción"
+                  required
+                ></v-text-field>
+
                 <v-btn
                   color="success"
                   class="mx-auto"
                   type="submit"
                 >
-                  Recargar
+                  Pagar
                 </v-btn>
               </v-form>
               <p v-if="error" class="display-0 mt-5 red--text">
-                Su recarga no fue exitosa
+                Su pago no fue exitoso
               </p>
               <p v-if="success" class="display-0 mt-5 green--text">
-                Su saldo se actualizó correctamente
+                Su ha enviado un mensaje a su correo con un link de confirmación
               </p>
             </v-col>
             
@@ -85,7 +79,7 @@
   const userId = window.localStorage.getItem('userId');
 
   export default {
-    name: 'Check',
+    name: 'Pay',
     components: {
       AppBar,
       NavigationPanel
@@ -97,8 +91,7 @@
       success: false,
       name: '',
       lastName: '',
-      dni: '',
-      phone: '',
+      description: '',
       validateRules: [
         v => !!v || 'El campo es requerido',
       ],
@@ -124,12 +117,12 @@
         e.preventDefault();
         if(this.$refs.form.validate() === true) {
           let data = {
-            dni: this.dni,
-            phone: this.phone,
+            user_id: userId,
+            description: this.description,
             amount: this.amount
           }
 
-          this.axios.post(`wallet/add-balance/${userId}`, data)
+          this.axios.post('movement/add/', data)
             .then(response => {
               
               this.error = false;

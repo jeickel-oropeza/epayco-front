@@ -8,6 +8,7 @@ import VueAxios from "vue-axios";
 import Dashboard from "./components/Dashboard.vue";
 import Check from "./components/Check.vue";
 import AddBalance from "./components/AddBalance.vue";
+import Pay from "./components/Pay.vue";
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
@@ -42,6 +43,11 @@ const router = new VueRouter({
       path: '/add-balance',
       component: AddBalance,
       name: 'add-balance'
+    },
+    {
+      path: '/pay',
+      component: Pay,
+      name: 'pay'
     }
   ]
 });
